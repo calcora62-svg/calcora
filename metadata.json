@@ -1,0 +1,8 @@
+{
+  "name": "Calcora",
+  "description": "Private, fast, browser-based tools for ecommerce sellers. Clean spreadsheets, resize photos, and make social videos locally.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

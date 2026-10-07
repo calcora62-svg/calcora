@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-900: #1e3a8a;
+
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-card: var(--card-bg);
+  --color-card-foreground: var(--card-fg);
+  --color-border: var(--border-color);
+  --color-muted: var(--muted-bg);
+  --color-muted-foreground: var(--muted-fg);
+  
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  :root {
+    --bg: #fdfdfd;
+    --fg: #0f172a;
+    --card-bg: #ffffff;
+    --card-fg: #0f172a;
+    --border-color: #e2e8f0;
+    --muted-bg: #f1f5f9;
+    --muted-fg: #64748b;
+  }
+
+  .dark {
+    --bg: #0b0f19;
+    --fg: #f8fafc;
+    --card-bg: #111827;
+    --card-fg: #f8fafc;
+    --border-color: #1e293b;
+    --muted-bg: #1e293b;
+    --muted-fg: #94a3b8;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Custom Utilities for smooth scroll */
+html {
+  scroll-behavior: smooth;
+}

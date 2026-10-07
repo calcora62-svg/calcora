@@ -1,0 +1,9 @@
+node_modules
+dist
+build
+.git
+.cache
+.vite-temp
+uploads
+*.log
+.DS_Store
