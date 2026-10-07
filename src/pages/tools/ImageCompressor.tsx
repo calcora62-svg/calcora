@@ -152,7 +152,7 @@ export const ImageCompressor = () => {
       usePlanStore.getState().consumeUsage('image-compressor');
       
     } catch (err) {
-      error('[ImageCompressor] Total failure:', err);
+      console.error('[ImageCompressor] Total failure:', err);
       setError('Something went wrong while processing this file. Please try a smaller image.');
     } finally {
       setProcessing(false);

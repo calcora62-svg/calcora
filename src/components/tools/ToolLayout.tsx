@@ -14,6 +14,7 @@ interface ToolLayoutProps {
   onFileSelect: (files: File[]) => void;
   processing: boolean;
   progress?: number;
+  processingMessage?: string;
   result?: {
     originalSize?: number;
     newSize?: number;
@@ -25,6 +26,7 @@ interface ToolLayoutProps {
   error?: string;
   onReset: () => void;
   onProcess?: () => void;
+  onTryAgain?: () => void;
   children?: React.ReactNode;
   resultNode?: React.ReactNode;
   multiple?: boolean;
@@ -32,7 +34,7 @@ interface ToolLayoutProps {
 }
 
 export const ToolLayout = ({
-  title, description, accept, onFileSelect, processing, progress, result, error, onReset, onProcess, children, resultNode, multiple = false, toolId
+  title, description, accept, onFileSelect, processing, progress, processingMessage, result, error, onReset, onProcess, onTryAgain, children, resultNode, multiple = false, toolId
 }: ToolLayoutProps) => {
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -241,16 +243,23 @@ export const ToolLayout = ({
       </div>
 
       {(error || localPlanError) && (
-        <div className="p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl flex items-center justify-between gap-3 border border-red-200 dark:border-red-800">
+        <div className="p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border border-red-200 dark:border-red-800">
           <div className="flex items-center gap-3">
             <AlertCircle className="w-5 h-5 shrink-0" />
             <p>{error || localPlanError}</p>
           </div>
-          {localPlanError && (
-            <Button variant="primary" size="sm" onClick={() => navigate('/pricing')}>
-              View Plans
-            </Button>
-          )}
+          <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+            {onTryAgain && !localPlanError && (
+              <Button variant="outline" size="sm" onClick={onTryAgain} className="bg-white dark:bg-card border-red-200 dark:border-red-800 hover:bg-red-50 dark:hover:bg-red-950/40">
+                Try Again
+              </Button>
+            )}
+            {localPlanError && (
+              <Button variant="primary" size="sm" onClick={() => navigate('/pricing')}>
+                View Plans
+              </Button>
+            )}
+          </div>
         </div>
       )}
 
@@ -303,11 +312,13 @@ export const ToolLayout = ({
       {processing && (
         <div className="border border-border-color rounded-3xl p-12 text-center bg-card flex flex-col items-center justify-center min-h-[300px]">
           <Loader2 className="w-12 h-12 text-primary-600 animate-spin mb-6" />
-          <h3 className="text-xl font-bold text-foreground mb-2">Processing your file...</h3>
+          <h3 className="text-xl font-bold text-foreground mb-2">
+            {processingMessage || 'Processing your file...'}
+          </h3>
           {progress !== undefined && (
             <div className="w-full max-w-md mt-6">
               <div className="flex justify-between text-sm mb-2 text-muted-fg">
-                <span>Progress</span>
+                <span>{processingMessage || 'Progress'}</span>
                 <span>{Math.round(progress)}%</span>
               </div>
               <div className="h-2 bg-muted-bg rounded-full overflow-hidden">
